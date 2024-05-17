@@ -1,0 +1,195 @@
+<span class="tag">Raju rastogi<span class="remove-tag">&times;</span></span>
+                            <span class="tag">mohanlal<span class="remove-tag">&times;</span></span>
+                            <span class="tag">chandanlal<span class="remove-tag">&times;</span></span>
+                            <span class="tag">motalal<span class="remove-tag">&times;</span></span>
+                            <span class="tag">+5</span>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            /*
+function showNotification(message) {
+    if (Notification.permission === "granted") {
+        const notification = new Notification(message);
+    } else if (Notification.permission !== "denied") {
+        Notification.requestPermission().then(function(permission) {
+            if (permission === "granted") {
+                const notification = new Notification(message);
+            }
+        });
+    }
+}
+
+function convertTimetoSeconds(time) {
+    const timeArray = time.split(':');
+    let hours = parseInt(timeArray[0]);
+    const minutes = parseInt(timeArray[1]);
+
+    if (hours === 12 && time.toLowerCase().includes("am")) {
+        hours = 0;
+    } else if (hours === 12 && time.toLowerCase().includes("pm")) {
+        hours += 12;
+    }
+
+    const totalSeconds = hours * 3600 + minutes * 60;
+    return totalSeconds;
+}
+
+function startTimer(deadlineTime, message) {
+    const duration = convertTimetoSeconds(deadlineTime);
+    let timer = duration;
+    const intervalId = setInterval(function() {
+        const hours = Math.floor(timer / 3600);
+        const minutes = Math.floor((timer % 3600) / 60);
+        const seconds = timer % 60;
+        
+
+        // Update the timer display
+        document.getElementById("times").innerHTML = hours.toString().padStart(2, '0') + ":" + minutes.toString().padStart(2, '0') + ":" + seconds.toString().padStart(2, '0');
+
+        timer--;
+
+        if (timer < 0) {
+            clearInterval(intervalId);
+            showNotification(message);
+        }
+    }, 1000);
+}
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//modalManager.js//
+
+const { BrowserWindow, screen } = require('electron');
+
+let modalWindow;
+
+function createModalWindow() {
+    modalWindow = new BrowserWindow({
+        width: 400,
+        height: 300,
+        frame: false,
+        transparent: true,
+        alwaysOnTop: true,
+        webPreferences: {
+            nodeIntegration: true
+        }
+    });
+
+    const { width, height } = screen.getPrimaryDisplay().workAreaSize;
+    const modalWidth = 400;
+    const modalHeight = 300;
+    modalWindow.setPosition(width - modalWidth - 20, height - modalHeight - 20);
+
+    modalWindow.loadFile('path/to/modal.html');
+    // modalWindow.webContents.openDevTools();
+
+    modalWindow.hide(); // Hide the modal initially
+}
+
+function showModal() {
+    if (modalWindow) {
+        modalWindow.show();
+    }
+}
+
+function hideModal() {
+    if (modalWindow) {
+        modalWindow.hide();
+    }
+}
+
+module.exports = { createModalWindow, showModal, hideModal };
+
+
+//main.js//
+const { app } = require('electron');
+const { createModalWindow } = require('./modalManager');
+
+app.whenReady().then(() => {
+    createModalWindow();
+});
+
+// Other application lifecycle and window management code...
